@@ -6,36 +6,45 @@ class Smelly_greeter
   # Create the object
   def initialize(names_to_be_output = "stranger")
     @names = names_to_be_output
-    #@is_stranger = (names_to_be_output.nil?)
+    @is_stranger = (names_to_be_output.nil?)
   end
 
   # Say hi to everybody
   def say_hi
     if @names.empty? 
       puts "Hello stranger!"
-    elsif @names.class.name == "Array"
-    # check if it is an array that can do each
-      @names.each do |nam|
-        puts "Hello #{nam}"
-      end      
     else
-      puts "Hello #{@names}!"
+      # check if it is an array that can do each
+      if @names.respond_to?("each")
+        i = 0
+        while i < @names.length
+          puts "Hello " + @names[i]
+                i = i + 1
+        end
+      
+      else
+            puts "Hello #{@names}!"
+      end
     end
-    
+
   end
+
 
   # Say bye to everybody
   def sayBye(message = "Goodbye")
-    
-    if @names.nil? || @names.empty?
+    if @names.nil? || @names.length == 0
       puts "Goodbye stranger.  Come back soon!"
-    elsif @names.class.name == "Array"
+
+    # check if it is an array that can do each
+    elsif @names.respond_to?("join") && !@names.nil?
       puts "Goodbye #{@names.join(", ")}.  Come back soon!"
+
     else
       puts "Goodbye #{@names}.  Come back soon!"
     end
-  end
 
+    return
+  end
 end
 
 
